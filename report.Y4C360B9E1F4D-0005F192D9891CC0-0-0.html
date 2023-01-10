@@ -288,7 +288,8 @@ Tenant SQL compatibility mode is mysql
         <td>192.168.1.77</td>
         <td>19510</td>
     </tr>
-</table><pre style='margin:20px;border:1px solid gray;'>explain select /*+ parallel(4) */ count(*) from (select a.c1 from t1 a, t1 b where a.c2 = b.c3);</pre><pre style='margin:20px;border:1px solid gray;'>+----------------------------------------------------------------------------+
+</table><pre style='margin:20px;border:1px solid gray;'>explain select /*+ parallel(4) */ count(*) from (select a.c1 from t1 a, t1 b where a.c2 = b.c3);
++----------------------------------------------------------------------------+
 | Query Plan                                                                 |
 +----------------------------------------------------------------------------+
 | ============================================================               |
@@ -330,7 +331,8 @@ Tenant SQL compatibility mode is mysql
 |   12 - output([b.c3]), filter(nil), rowset=256,                            |
 |       access([b.c3]), partitions(p[0-3])                                   |
 |                                                                            |
-+----------------------------------------------------------------------------+</pre><pre style='margin:20px;border:1px solid gray;'>select * from oceanbase.gv$ob_plan_cache_plan_explain where tenant_id = 1004 and plan_id = 463  and svr_ip = '192.168.1.77' and svr_port = 19510</pre><pre style='margin:20px;border:1px solid gray;'>+-----------+--------------+----------+---------+------------+--------------+-----------------------------+------+------+------+-----------------------------------------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------+</pre><pre style='margin:20px;border:1px solid gray;'>select * from oceanbase.gv$ob_plan_cache_plan_explain where tenant_id = 1004 and plan_id = 463  and svr_ip = '192.168.1.77' and svr_port = 19510
++-----------+--------------+----------+---------+------------+--------------+-----------------------------+------+------+------+-----------------------------------------------------------------------------------------------------------------------------------------------+
 | TENANT_ID | SVR_IP       | SVR_PORT | PLAN_ID | PLAN_DEPTH | PLAN_LINE_ID | OPERATOR                    | NAME | ROWS | COST | PROPERTY                                                                                                                                      |
 +-----------+--------------+----------+---------+------------+--------------+-----------------------------+------+------+------+-----------------------------------------------------------------------------------------------------------------------------------------------+
 | 1004      | 192.168.1.77 | 19510    | 463     | 0          | 0            | PHY_SCALAR_AGGREGATE        | NULL | 1    | 4    | NULL                                                                                                                                          |
@@ -1997,7 +1999,7 @@ partition p3)</pre><pre style='margin:20px;border:1px solid gray;'>+------------
 </table></div></div><h2 id='ash_anchor'>ASH Report</h2><pre style='margin:20px;border:1px solid gray;'>
   SELECT SQL_PLAN_LINE_ID OP_ID, IF(EVENT = '', 'CPU + WAIT FOR CPU', EVENT) AS EVENT, WAIT_CLASS, COUNT(1) EVENT_CNT, ROUND(COUNT(1) * 100 / SUM(COUNT(1)) OVER (), 2) AS Percent, MAX(P1TEXT) P1TEXT, MAX(P1) P1, MAX(P2TEXT) P2TEXT,  MAX(P2) P2, MAX(P3TEXT) P3TEXT, MAX(P3) P3
   FROM OCEANBASE.GV$ACTIVE_SESSION_HISTORY A WHERE TRACE_ID = 'Y4C360B9E1F4D-0005F192D9891CC0-0-0' GROUP BY A.SQL_PLAN_LINE_ID, A.EVENT, A.WAIT_CLASS ORDER BY 1 ASC, 4 DESC
-</pre><pre style='margin:20px;border:1px solid gray;'>+-------+------------------------+-------------+-----------+---------+---------+-----------------+--------+----+--------+----+
++-------+------------------------+-------------+-----------+---------+---------+-----------------+--------+----+--------+----+
 | OP_ID | EVENT                  | WAIT_CLASS  | EVENT_CNT | Percent | P1TEXT  | P1              | P2TEXT | P2 | P3TEXT | P3 |
 +-------+------------------------+-------------+-----------+---------+---------+-----------------+--------+----+--------+----+
 | 1     | px loop condition wait | CONCURRENCY | 393       | 33.56   | address | 140342512307856 |        | 0  |        | 0  |
